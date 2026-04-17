@@ -250,7 +250,10 @@
 
         // 1. Generate Twinkling Star Field
         const starField = document.getElementById('star-field');
-        for (let i = 0; i < 60; i++) {
+        const isMobile = window.innerWidth < 768;
+        const starCount = isMobile ? 30 : 60;
+        
+        for (let i = 0; i < starCount; i++) {
             const star = document.createElement('div');
             star.className = 'star';
             const size = Math.random() * 2 + 1;
@@ -267,6 +270,7 @@
         // 2. Generate Floating Music Notes
         const musicContainer = document.getElementById('music-container');
         function createNote() {
+            if (isMobile && Math.random() > 0.5) return; // Throttling for mobile
             const note = document.createElement('div');
             note.className = 'floating-note';
             note.innerHTML = '<i data-lucide="music"></i>';
@@ -279,7 +283,7 @@
                 note.remove();
             }, 12000);
         }
-        setInterval(createNote, 2500);
+        setInterval(createNote, isMobile ? 4000 : 2500);
 
         // 3. Personality Elements Parallax
         const elements = document.querySelectorAll('.personality-element:not(.plane-roaming)');
